@@ -4,13 +4,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Conversation } from './conversations/entities/conversation.entity';
 import { Message } from './messages/entities/message.entity';
 import { Knowledge } from './knowledge/entities/knowledge.entity';
-import { ConversationsService } from './conversations/conversations.service';
 import { ConversationsModule } from './conversations/conversations.module';
 import { MessagesModule } from './messages/messages.module';
 import { KnowledgeModule } from './knowledge/knowledge.module';
 import { LlmModule } from './llm/llm.module';
 import { RedisModule } from './redis/redis.module';
 import { ChatModule } from './chat/chat.module';
+import { DatabaseModule } from './database/database.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -44,6 +44,8 @@ import { ChatModule } from './chat/chat.module';
     RedisModule,
 
     ChatModule,
+
+    DatabaseModule,
   ],
 })
 export class AppModule {}

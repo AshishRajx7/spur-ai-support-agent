@@ -2,12 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Message } from './entities/message.entity';
+import { RedisService } from 'src/redis/redis.service';
 
 @Injectable()
 export class MessagesService {
   constructor(
     @InjectRepository(Message)
     private readonly messageRepository: Repository<Message>,
+
+    private readonly redisService: RedisService,
   ) {}
 
   async create(
@@ -21,15 +24,36 @@ export class MessagesService {
       text,
     });
 
-    return this.messageRepository.save(message);
+    const saved = await this.messageRepository.save(message);
+
+    await this.redisService.del(`conversation:${conversationId}:history`);
+
+    return saved;
   }
 
   async getHistory(conversationId: string): Promise<Message[]> {
-    return this.messageRepository.find({
+    const cacheKey = `conversation:${conversationId}:history`;
+
+    console.log('GET HISTORY CALLED');
+
+    const cached = await this.redisService.get(cacheKey);
+
+    if (cached) {
+      console.log('CACHE HIT');
+      return JSON.parse(cached) as Message[];
+    }
+
+    console.log('CACHE MISS');
+
+    const history = await this.messageRepository.find({
       where: { conversationId },
       order: {
         createdAt: 'ASC',
       },
     });
+    console.log('CACHE MISS');
+    await this.redisService.set(cacheKey, JSON.stringify(history), 3600);
+
+    return history;
   }
 }
