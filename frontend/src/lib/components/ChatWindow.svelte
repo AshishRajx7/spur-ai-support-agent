@@ -3,16 +3,21 @@
 
   import MessageBubble from './MessageBubble.svelte';
   import TypingIndicator from './TypingIndicator.svelte';
-
+  import WelcomeMessage from './WelcomeMessage.svelte';
   import {
     messages,
     isLoading,
     error,
   } from '$lib/stores/chat.store';
 
-  let messagesContainer:
-    | HTMLDivElement
-    | undefined;
+  // Define Svelte 5 component props
+  const {
+    onSuggestion = () => {},
+  }: {
+    onSuggestion?: (text: string) => void;
+  } = $props();
+
+  let messagesContainer: HTMLDivElement | undefined;
 
   async function scrollToBottom() {
     await tick();
@@ -24,8 +29,8 @@
   }
 
   $effect(() => {
+    // Keep track of messages length to trigger scroll on change
     $messages.length;
-
     scrollToBottom();
   });
 </script>
@@ -36,10 +41,7 @@
     bind:this={messagesContainer}
   >
     {#if $messages.length === 0}
-      <div class="welcome">
-        Ask ShopSpur about shipping,
-        returns, refunds or support.
-      </div>
+      <WelcomeMessage {onSuggestion} />
     {/if}
 
     {#each $messages as message}
@@ -61,45 +63,36 @@
 <style>
   .chat-container {
     flex: 1;
-
     display: flex;
     flex-direction: column;
-
     min-height: 0;
     overflow: hidden;
   }
 
   .messages {
     flex: 1;
-
     overflow-y: auto;
-
     display: flex;
     flex-direction: column;
-
     gap: 12px;
     padding: 16px;
-
     min-height: 0;
     scroll-behavior: smooth;
   }
 
+  /* .welcome rule can be removed if handled inside <WelcomeMessage /> */
   .welcome {
     margin: auto;
-
     text-align: center;
     color: #6b7280;
-
     max-width: 500px;
     line-height: 1.6;
   }
 
   .error {
     padding: 12px 16px;
-
     color: #dc2626;
     background: #fef2f2;
-
     border-top: 1px solid #fecaca;
   }
 </style>

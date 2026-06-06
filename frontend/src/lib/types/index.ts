@@ -1,8 +1,7 @@
 export type Sender = "USER" | "AI";
 
 export interface Message {
-  id?: string;
-  sender: Sender;
+  sender: 'USER' | 'AI';
   text: string;
   createdAt?: string;
 }
