@@ -29,7 +29,7 @@ import { DatabaseModule } from './database/database.module';
 
         entities: [Conversation, Message, Knowledge],
 
-        synchronize: true,
+        synchronize: false,
       }),
     }),
 
