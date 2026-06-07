@@ -5,7 +5,7 @@ import { DataSource } from 'typeorm';
 import { Conversation } from '../conversations/entities/conversation.entity';
 import { Message } from '../messages/entities/message.entity';
 import { Knowledge } from '../knowledge/entities/knowledge.entity';
-
+console.log('NODE_ENV:', process.env.NODE_ENV);
 export default new DataSource({
   type: 'postgres',
 
@@ -19,7 +19,11 @@ export default new DataSource({
 
   entities: [Conversation, Message, Knowledge],
 
-  migrations: ['src/database/migrations/*.ts', 'dist/database/migrations/*.js'],
+  migrations: [
+    process.env.NODE_ENV === 'production'
+      ? 'dist/database/migrations/*.js'
+      : 'src/database/migrations/*.ts',
+  ],
 
   synchronize: false,
 });
