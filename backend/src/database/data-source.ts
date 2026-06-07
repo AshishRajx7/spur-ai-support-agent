@@ -19,11 +19,7 @@ export default new DataSource({
 
   entities: [Conversation, Message, Knowledge],
 
-  migrations: [
-    process.env.NODE_ENV === 'production'
-      ? 'dist/database/migrations/*.js'
-      : 'src/database/migrations/*.ts',
-  ],
+  migrations: ['src/database/migrations/*.ts', 'dist/database/migrations/*.js'],
 
   synchronize: false,
 });
