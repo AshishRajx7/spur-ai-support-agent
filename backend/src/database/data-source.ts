@@ -6,7 +6,7 @@ import { Conversation } from '../conversations/entities/conversation.entity';
 import { Message } from '../messages/entities/message.entity';
 import { Knowledge } from '../knowledge/entities/knowledge.entity';
 console.log('NODE_ENV:', process.env.NODE_ENV);
-export default new DataSource({
+const dataSource = new DataSource({
   type: 'postgres',
 
   host: process.env.DATABASE_HOST,
@@ -26,4 +26,8 @@ export default new DataSource({
   ],
 
   synchronize: false,
+
+  logging: true,
 });
+
+export default dataSource;
