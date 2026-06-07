@@ -4,12 +4,25 @@
 
   import type { Message } from '$lib/types';
 
-  const { message } = $props<{
+  let { message } = $props<{
     message: Message;
   }>();
 
-  const html = DOMPurify.sanitize(
-    marked.parse(message.text) as string,
+  const html = $derived(
+    DOMPurify.sanitize(
+      marked.parse(message.text) as string,
+    ),
+  );
+
+  const timestamp = $derived(
+    message.createdAt
+      ? new Date(
+          message.createdAt,
+        ).toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit',
+        })
+      : '',
   );
 </script>
 
@@ -40,14 +53,7 @@
     </div>
 
     <div class="timestamp">
-      {#if message.createdAt}
-        {new Date(
-          message.createdAt,
-        ).toLocaleTimeString([], {
-          hour: '2-digit',
-          minute: '2-digit',
-        })}
-      {/if}
+      {timestamp}
     </div>
   </div>
 </div>

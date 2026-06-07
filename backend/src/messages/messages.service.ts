@@ -51,7 +51,6 @@ export class MessagesService {
         createdAt: 'ASC',
       },
     });
-    console.log('CACHE MISS');
     await this.redisService.set(cacheKey, JSON.stringify(history), 3600);
 
     return history;

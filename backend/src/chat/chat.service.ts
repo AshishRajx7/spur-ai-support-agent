@@ -27,13 +27,14 @@ export class ChatService {
 
     const history = (
       await this.messagesService.getHistory(conversation.id)
-    ).slice(-10);
+    ).slice(-4);
 
     const aiReply = await this.llmService.generateReply(
       history,
       dto.message,
       knowledgeContext,
     );
+
     await this.messagesService.create(conversation.id, 'AI', aiReply);
 
     return {
@@ -41,7 +42,6 @@ export class ChatService {
       sessionId: conversation.id,
     };
   }
-
   async getHistory(sessionId: string) {
     return this.messagesService.getHistory(sessionId);
   }

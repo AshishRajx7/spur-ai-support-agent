@@ -80,15 +80,6 @@
     scroll-behavior: smooth;
   }
 
-  /* .welcome rule can be removed if handled inside <WelcomeMessage /> */
-  .welcome {
-    margin: auto;
-    text-align: center;
-    color: #6b7280;
-    max-width: 500px;
-    line-height: 1.6;
-  }
-
   .error {
     padding: 12px 16px;
     color: #dc2626;

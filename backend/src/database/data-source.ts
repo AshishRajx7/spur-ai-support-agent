@@ -6,7 +6,6 @@ import { Conversation } from '../conversations/entities/conversation.entity';
 import { Message } from '../messages/entities/message.entity';
 import { Knowledge } from '../knowledge/entities/knowledge.entity';
 
-
 export default new DataSource({
   type: 'postgres',
 
