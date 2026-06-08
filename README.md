@@ -6,9 +6,9 @@ Users can ask support questions, receive AI generated responses grounded in a st
 
 ## Live Demo
 
-**Frontend:** https://your-frontend-url
+**Frontend:** https://your-frontend-url](https://spur-ai-support-agent-murex.vercel.app/
 
-**API Documentation:** https://your-backend-url/api
+**API Documentation:** https://spur-ai-support-agent-j07c.onrender.com/
 
 ⚠️ Important: The backend is hosted on Render's free tier and may take ~30 seconds to wake up after inactivity. If the chat appears slow on the first request, open:
 
