@@ -17,7 +17,8 @@ export class SeedService {
   }
 
   private async seedKnowledge(): Promise<void> {
-    await this.knowledgeRepository.delete({});
+    await this.knowledgeRepository.query('DELETE FROM knowledge');
+
     await this.knowledgeRepository.save(KNOWLEDGE_SEED);
     console.log(`Seeded ${KNOWLEDGE_SEED.length} knowledge records.`);
   }
