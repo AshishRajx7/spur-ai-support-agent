@@ -13,6 +13,8 @@ async function bootstrap() {
   await app.close();
 
   console.log('Database seeding completed.');
+
+  process.exit(0);
 }
 
 bootstrap().catch((error) => {
