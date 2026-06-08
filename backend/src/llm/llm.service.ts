@@ -4,7 +4,7 @@ import OpenAI from 'openai';
 
 import { Message } from '../messages/entities/message.entity';
 import { LLMProvider } from './llm.interface';
-import { buildSupportPrompt } from './prompts';
+import { buildSupportPrompt, buildUserMessage } from './prompts';
 
 @Injectable()
 export class LlmService implements LLMProvider {
@@ -41,7 +41,7 @@ export class LlmService implements LLMProvider {
 
         {
           role: 'user' as const,
-          content: userMessage,
+          content: buildUserMessage(userMessage), // grounds the final turn
         },
       ];
 
@@ -50,11 +50,11 @@ export class LlmService implements LLMProvider {
         messages,
         temperature: 0.2,
         top_p: 0.9,
-        max_tokens: 512,
+        max_tokens: 300, // tighter = less room to hallucinate
       });
 
       return (
-        completion.choices[0]?.message?.content ??
+        completion.choices[0]?.message?.content?.trim() ??
         'I could not generate a response.'
       );
     } catch (error) {
