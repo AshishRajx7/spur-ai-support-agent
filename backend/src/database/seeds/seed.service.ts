@@ -17,15 +17,8 @@ export class SeedService {
   }
 
   private async seedKnowledge(): Promise<void> {
-    const count = await this.knowledgeRepository.count();
-
-    if (count > 0) {
-      console.log('Knowledge table already seeded. Skipping...');
-      return;
-    }
-
+    await this.knowledgeRepository.delete({});
     await this.knowledgeRepository.save(KNOWLEDGE_SEED);
-
     console.log(`Seeded ${KNOWLEDGE_SEED.length} knowledge records.`);
   }
 }
