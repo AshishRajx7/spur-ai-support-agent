@@ -11,6 +11,7 @@ import { LlmModule } from './llm/llm.module';
 import { RedisModule } from './redis/redis.module';
 import { ChatModule } from './chat/chat.module';
 import { DatabaseModule } from './database/database.module';
+import { AppController } from './app.controller';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -47,5 +48,6 @@ import { DatabaseModule } from './database/database.module';
 
     DatabaseModule,
   ],
+  controllers: [AppController],
 })
 export class AppModule {}
