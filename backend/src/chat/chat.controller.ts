@@ -16,4 +16,12 @@ export class ChatController {
   getHistory(@Param('sessionId') sessionId: string) {
     return this.chatService.getHistory(sessionId);
   }
+
+  @Get('health')
+  health() {
+    return {
+      status: 'ok',
+      uptime: process.uptime(),
+    };
+  }
 }
